@@ -1,0 +1,16 @@
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\bin\Debug\net5.0\FolderCrawler.exe
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\bin\Debug\net5.0\FolderCrawler.deps.json
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\bin\Debug\net5.0\FolderCrawler.runtimeconfig.json
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\bin\Debug\net5.0\FolderCrawler.runtimeconfig.dev.json
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\bin\Debug\net5.0\FolderCrawler.dll
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\bin\Debug\net5.0\ref\FolderCrawler.dll
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\bin\Debug\net5.0\FolderCrawler.pdb
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.csproj.AssemblyReference.cache
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.AssemblyInfoInputs.cache
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.AssemblyInfo.cs
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.csproj.CoreCompileInputs.cache
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.dll
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\ref\FolderCrawler.dll
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.pdb
+C:\Users\woute\Documents\Programming\Experimenting\FolderCrawler\obj\Debug\net5.0\FolderCrawler.genruntimeconfig.cache
