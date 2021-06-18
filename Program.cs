@@ -9,8 +9,7 @@ namespace FolderCrawler
         static void Main()
         {
             string currentFolder = "C:/Users/woute/Desktop";
-            List<string> files = new List<string>();
-            List<string> folders = GetDirectories(currentFolder, out files);
+            List<string> folders = GetDirectories(currentFolder, out List<string> files);
             foreach (string file in files)
             {
                 Console.WriteLine($"Filename: {file}");
@@ -26,9 +25,8 @@ namespace FolderCrawler
             try{
                 string[] subDirs = Directory.GetDirectories(dir);
                 foreach(string sub in subDirs){
-                    List<string> newFiles2 = new List<string>();
                     folders.Add(sub);
-                    folders.AddRange(GetSubDirectories(sub, out newFiles2));
+                    folders.AddRange(GetSubDirectories(sub, out List<string> newFiles2));
                     newFiles.AddRange(newFiles2);
                 }  
             }
@@ -45,9 +43,8 @@ namespace FolderCrawler
             folders.Add(startDirectory);
             newFiles.AddRange(Directory.GetFiles(startDirectory));
             foreach(string sub in Directory.GetDirectories(startDirectory)){
-                List<string> newFiles2 = new List<string>();
                 folders.Add(sub);
-                folders.AddRange(GetSubDirectories(sub, out newFiles2)); 
+                folders.AddRange(GetSubDirectories(sub, out List<string> newFiles2)); 
                 newFiles.AddRange(newFiles2);
             }
             files = newFiles;
