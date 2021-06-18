@@ -8,47 +8,18 @@ namespace FolderCrawler
     {
         static void Main()
         {
-            string currentFolder = "C:/Users/woute/Desktop";
-            List<string> folders = GetDirectories(currentFolder, out List<string> files);
+            string currentFolder = "C:/Users/woute/Desktop/test";
+            Crawler crawler = new Crawler();
+            List<string> folders = crawler.GetDirectories(currentFolder, out List<string> files);
             foreach (string file in files)
             {
                 Console.WriteLine($"Filename: {file}");
             }
             Console.WriteLine($"============\nAccessed {folders.Count} folders");
             Console.WriteLine($"Detected {files.Count} files");
-        }
 
-        static List<string> GetSubDirectories(string dir, out List<string> files){
-            List<string> folders = new List<string>();
-            List<string> newFiles = new List<string>();
-            newFiles.AddRange(Directory.GetFiles(dir));
-            try{
-                string[] subDirs = Directory.GetDirectories(dir);
-                foreach(string sub in subDirs){
-                    folders.Add(sub);
-                    folders.AddRange(GetSubDirectories(sub, out List<string> newFiles2));
-                    newFiles.AddRange(newFiles2);
-                }  
-            }
-            catch(Exception e){
-                Console.WriteLine($"Herres: {e}");
-            }
-            files = newFiles;
-            return folders;
-        }
-
-        static List<string> GetDirectories(string startDirectory, out List<string> files){
-            List<string> folders = new List<string>();
-            List<string> newFiles = new List<string>();
-            folders.Add(startDirectory);
-            newFiles.AddRange(Directory.GetFiles(startDirectory));
-            foreach(string sub in Directory.GetDirectories(startDirectory)){
-                folders.Add(sub);
-                folders.AddRange(GetSubDirectories(sub, out List<string> newFiles2)); 
-                newFiles.AddRange(newFiles2);
-            }
-            files = newFiles;
-            return folders;
+            File fileNew = new File(files[0]);
+            Console.WriteLine(fileNew.ToString());
         }
     }
 }
