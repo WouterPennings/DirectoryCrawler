@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectoryCrawler.Presentation", "DirectoryCrawler.Presentation\DirectoryCrawler.Presentation.csproj", "{572517E7-E6AA-4B83-85C1-91FAF0787B42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectoryCrawler.Logic", "DirectoryCrawler.Logic\DirectoryCrawler.Logic.csproj", "{33E38B98-9B8A-48F3-875F-F864A7003C87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{572517E7-E6AA-4B83-85C1-91FAF0787B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{572517E7-E6AA-4B83-85C1-91FAF0787B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{572517E7-E6AA-4B83-85C1-91FAF0787B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{572517E7-E6AA-4B83-85C1-91FAF0787B42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33E38B98-9B8A-48F3-875F-F864A7003C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E38B98-9B8A-48F3-875F-F864A7003C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E38B98-9B8A-48F3-875F-F864A7003C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33E38B98-9B8A-48F3-875F-F864A7003C87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
