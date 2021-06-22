@@ -9,6 +9,7 @@ namespace DirectoryCrawler.Presentation
 {
     class Program
     {
+        private static string crawlResult = "No results yet";
         static void Main()
         {
             Console.WriteLine("Bonjour, Welcome to the most advanced calculator. Right?!\n\n");
@@ -21,10 +22,12 @@ namespace DirectoryCrawler.Presentation
             {
                 Console.WriteLine("I can addition\nGive a the first number");
                 int? x = Convert.ToInt32(Console.ReadLine());
-                if (x == -1) break;
+                if (x == -1) Console.WriteLine(crawlResult);
+                if (x == -2) break;
                 Console.WriteLine("What is the second number?");
                 int y = Convert.ToInt32(Console.ReadLine());
-                if (y == -1) break;
+                if (x == -1) Console.WriteLine(crawlResult);
+                if (y == -2) break;
                 Console.WriteLine($"Answer: {x + y}");
             }
         }
@@ -39,7 +42,7 @@ namespace DirectoryCrawler.Presentation
             {
                 Console.WriteLine($"File location: {file.ToString()}");
             }*/
-            Console.WriteLine($"Crawling report:\n  Accessed {folders.Count} folders\n  Detected {files.Count} files");
+            crawlResult = $"Crawling report:\n  Accessed {folders.Count} folders\n  Detected {files.Count} files";
         }
         
         // If you want to crawl the whole device call this function.
