@@ -21,9 +21,9 @@ wss.on('connection', (ws: any) => {
     ws.on('message', (message: string) => {
         console.log('[server] Received message: %s', message);
         wss.clients.forEach(function each(client: any){
-            if(client !== ws && client.readyState === WebSocket.OPEN){
+            if(client.readyState === WebSocket.OPEN){
                 const json: any = JSON.parse(message);
-                client.send(json.message);
+                client.send(json[0] + json[1] + json[2]);
             }
         });
     });

@@ -9,4 +9,8 @@
       <ProjectReference Include="..\DirectoryCrawler.Logic\DirectoryCrawler.Logic.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="WebSocketSharp-NonPreRelease" Version="1.0.0" />
+    </ItemGroup>
+
 </Project>
