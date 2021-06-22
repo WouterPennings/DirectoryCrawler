@@ -8,16 +8,16 @@ namespace DirectoryCrawler.Logic
 {
     public class Crawler
     {
-        public void GetDirectorieContent(string startDirectory, out List<File> files, out List<string> folders)
+        public void GetDirectorieContent(string startDirectory, out List<CFile> files, out List<string> folders)
         {
             List<string> newFolders = new List<string>();
-            List<File> newFiles = new List<File>();
+            List<CFile> newFiles = new List<CFile>();
             newFolders.Add(startDirectory);
             newFiles.AddRange(ConvertToFiles(Directory.GetFiles(startDirectory).ToList()));
             foreach (string sub in Directory.GetDirectories(startDirectory))
             {
                 newFolders.Add(sub);
-                newFolders.AddRange(GetSubDirectoriesContent(sub, out List<File> newFiles2));
+                newFolders.AddRange(GetSubDirectoriesContent(sub, out List<CFile> newFiles2));
                 newFiles.AddRange(newFiles2);
             }
 
@@ -25,11 +25,11 @@ namespace DirectoryCrawler.Logic
             folders = newFolders;
         }
 
-        private List<string> GetSubDirectoriesContent(string dir, out List<File> files)
+        private List<string> GetSubDirectoriesContent(string dir, out List<CFile> files)
         {
             Convert.ToString(5);
             List<string> folders = new List<string>();
-            List<File> newFiles = new List<File>();
+            List<CFile> newFiles = new List<CFile>();
             newFiles.AddRange(ConvertToFiles(Directory.GetFiles(dir).ToList()));
             try
             {
@@ -37,7 +37,7 @@ namespace DirectoryCrawler.Logic
                 foreach (string sub in subDirs)
                 {
                     folders.Add(sub);
-                    folders.AddRange(GetSubDirectoriesContent(sub, out List<File> newFiles2));
+                    folders.AddRange(GetSubDirectoriesContent(sub, out List<CFile> newFiles2));
                     newFiles.AddRange(newFiles2);
                 }
             }
@@ -50,12 +50,12 @@ namespace DirectoryCrawler.Logic
             return folders;
         }
 
-        private List<File> ConvertToFiles(List<string> files)
+        private List<CFile> ConvertToFiles(List<string> files)
         {
-            List<File> newFiles = new List<File>();
+            List<CFile> newFiles = new List<CFile>();
             foreach (string file in files)
             {
-                newFiles.Add(new File(file));
+                newFiles.Add(new CFile(file));
             }
 
             return newFiles;

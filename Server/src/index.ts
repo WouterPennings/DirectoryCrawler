@@ -19,12 +19,11 @@ wss.on('connection', (ws: any) => {
     });
 
     ws.on('message', (message: string) => {
-        console.log('[server] Received message: %s', message);
-        const json2 = GetJSON(message);
-        if(json2 !== false){
+        const json = GetJSON(message);
+        console.log('[server] Received message, ClientId: %s', json.ClientId);
+        if(json !== false){
             wss.clients.forEach(function each(client: any){
                 if(client.readyState === WebSocket.OPEN){
-                    const json: any = JSON.parse(message);
                     if(json.hasOwnProperty('files')) client.send(json.files);
                     else client.send('{"error":"Key: files, was missing."}');
                 }

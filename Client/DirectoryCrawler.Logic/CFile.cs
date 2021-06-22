@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace DirectoryCrawler.Logic
 {
-    public class File
+    public class CFile
     {
         private string _name;
         private List<Folder> _Path;
 
-        public File(string filePath)
+        public CFile(string filePath)
         {
             _Path = new List<Folder>();
             filePath = filePath.Replace("\\", "/");

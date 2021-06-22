@@ -2,23 +2,30 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
+using System.Net;
 using System.Threading;
 using DirectoryCrawler.Logic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WebSocketSharp;
-using File = DirectoryCrawler.Logic.File;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace DirectoryCrawler.Presentation
 {
     class Program
     {
         private static string crawlResult = "No results yet";
-        private static List<File> _files = new List<File>();
+        private static List<CFile> _files = new List<CFile>();
         private static List<string> _folders = new List<string>();
         private static WebSocket ws;
+        private static Client client;
         static void Main()
         {
             Console.WriteLine("Bonjour, Welcome to the most advanced calculator. Right?!\n\n");
+            string fileLocation = @"../../../Files/info.json";
+            client = JsonConvert.DeserializeObject<Client>(File.ReadAllText(fileLocation));
+            client?.MaybeSetId();
+
             ws = new WebSocket("ws://localhost:3000");
             ws.Connect();
             // This is the thread for crawling the folders. You need to keep the rest of the application responsive
@@ -44,15 +51,10 @@ namespace DirectoryCrawler.Presentation
             string currentFolder = "C:/Users/woute/Desktop/restapi";
             Crawler crawler = new Crawler();
             crawler.GetDirectorieContent(currentFolder, out _files, out _folders);
-            /*
-            foreach (File file in files)
-            {
-                Console.WriteLine($"File location: {file.ToString()}");
-            }*/
             crawlResult = $"Crawling report:  Accessed {_folders.Count} folders // Detected {_files.Count} files";
             
-            List<string> properties = _files.Select(o => o.ToString()).ToList();
-            ws.Send(JsonSerializer.Serialize(properties));
+            client.Files = _files.Select(o => o.ToString()).ToList();
+            ws.Send(JsonSerializer.Serialize(client));
         }
         
         // If you want to crawl the whole device call this function.
