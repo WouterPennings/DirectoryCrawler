@@ -19,17 +19,12 @@ wss.on('connection', (ws: any) => {
     });
 
     ws.on('message', (message: string) => {
-        const json = GetJSON(message);
-        console.log('[server] Received message, ClientId: %s', json.ClientId);
-        if(json !== false){
-            wss.clients.forEach(function each(client: any){
-                if(client.readyState === WebSocket.OPEN){
-                    if(json.hasOwnProperty('files')) client.send(json.files);
-                    else client.send('{"error":"Key: files, was missing."}');
-                }
-            });
-        }
-        else ws.send('{"error":"JSON was invalid."}');
+        console.log('[server] Received message');
+        wss.clients.forEach(function each(client: any){
+            if(ws !== client && client.readyState === WebSocket.OPEN){ 
+                client.send(message);
+            }
+        });
     });
 });
 

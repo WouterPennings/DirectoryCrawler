@@ -19,38 +19,52 @@ namespace DirectoryCrawler.Presentation
         private static List<string> _folders = new List<string>();
         private static WebSocket ws;
         private static Client client;
+        
         static void Main()
         {
-            Console.WriteLine("Bonjour, Welcome to the most advanced calculator. Right?!\n\n");
-            string fileLocation = @"../../../Files/info.json";
-            client = JsonConvert.DeserializeObject<Client>(File.ReadAllText(fileLocation));
+            Console.WriteLine("Bonjour, Custom FTP protocol");
+            client = JsonConvert.DeserializeObject<Client>(File.ReadAllText(@"../../../Files/info.json"));
             client?.MaybeSetId();
 
-            ws = new WebSocket("ws://localhost:3000");
-            ws.Connect();
-            // This is the thread for crawling the folders. You need to keep the rest of the application responsive
-            Thread crawlThread = new Thread(StartCrawl);
-            crawlThread.Start();
-
-            while (true)
+            try
             {
-                Console.WriteLine("I can addition\nGive a the first number");
-                int x = Convert.ToInt32(Console.ReadLine());
-                if (x == -1) Console.WriteLine(crawlResult);
-                if (x == -2) break;
-                Console.WriteLine("What is the second number?");
-                int y = Convert.ToInt32(Console.ReadLine());
-                if (x == -1) Console.WriteLine(crawlResult);
-                if (y == -2) break;
-                Console.WriteLine($"Answer: {x + y}");
+                Crawler crawler = new Crawler("C:\\Users\\woute\\Desktop\\restapi");
+                Console.WriteLine("Current Dir: " + crawler.ChangeDirectory("."));
+                Console.WriteLine("Current Dir: " + crawler.ChangeDirectory(".."));
+                Console.WriteLine("Current Dir: " + crawler.ChangeDirectory("restapi"));
+                crawler.DirectorieContent(out List<string> dirs, out List<string> files);
+                foreach (string dir in dirs)   Console.WriteLine($"<dir>     {dir}");
+                foreach (string file in files) Console.WriteLine($"          {file}");
             }
+            catch (ChangeDirectoryException exc)
+            {
+                Console.WriteLine($"Exception: {exc.Message}");
+                Console.WriteLine($"ExceptionCode: {exc.ExceptionCode}");
+            }
+            
+            /*List<string> x = crawler.SubDirectories();
+            foreach (string dir in x)
+            {
+                Console.WriteLine(dir);
+            }*/
+            
+            /*
+            string uri = "ws://localhost:3000";
+            using (ws = new WebSocket(uri))
+            {
+                ws = new WebSocket(uri);
+                ws.OnMessage += Ws_OnMessage;
+                ws.Connect ();
+                
+                Console.ReadKey();
+            }*/
         }
 
         private static void StartCrawl()
         {
             string currentFolder = "C:/Users/woute/Desktop/restapi";
             Crawler crawler = new Crawler();
-            crawler.GetDirectorieContent(currentFolder, out _files, out _folders);
+            crawler.CrawlDirectorie(currentFolder, out _files, out _folders);
             crawlResult = $"Crawling report:  Accessed {_folders.Count} folders // Detected {_files.Count} files";
             
             client.Files = _files.Select(o => o.ToString()).ToList();
@@ -64,6 +78,12 @@ namespace DirectoryCrawler.Presentation
             string location = Directory.GetCurrentDirectory();
             location = location.Replace("\\", "/");
             return location.Split("/")[0];
+        }
+
+        private static void Ws_OnMessage(object sender, MessageEventArgs message)
+        {
+            JObject json = JObject.Parse(message.Data);
+            Console.WriteLine(json["mes"]);
         }
     }
 }
