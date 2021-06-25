@@ -25,11 +25,9 @@ namespace DirectoryCrawler.Presentation
             Console.WriteLine("Bonjour, Custom FTP protocol");
             client = JsonConvert.DeserializeObject<Client>(File.ReadAllText(@"../../../Files/info.json"));
             client?.MaybeSetId();
-            
-            CFile file2 = new CFile(CommonFunctions.PathToList("C:\\Users\\woute\\Desktop\\BusinessLeonardo\\"), "LeonARdo_Verslagpdf.pdf");
             try
             {
-                Crawler crawler = new Crawler("C:\\Users\\woute\\Desktop\\restapi");
+                Crawler crawler = new Crawler(new CDirectory(CommonFunctions.PathToList("C:\\Users\\woute\\Desktop"), "restapi"));
                 Console.WriteLine("Current Dir: " + crawler.ChangeDirectory("."));
                 Console.WriteLine("Current Dir: " + crawler.ChangeDirectory(".."));
                 Console.WriteLine("Current Dir: " + crawler.ChangeDirectory("restapi"));

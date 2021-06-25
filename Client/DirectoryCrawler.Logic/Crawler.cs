@@ -8,15 +8,15 @@ namespace DirectoryCrawler.Logic
 {
     public class Crawler
     {
-        private string _currentDirectory;
+        private CDirectory _currentDirectory;
 
         public Crawler()
         {
-            string location = Directory.GetCurrentDirectory();
-            _currentDirectory = location.Replace("\\", "/");
+            List<string> path = CommonFunctions.PathToList(Directory.GetCurrentDirectory());
+            _currentDirectory = new CDirectory(path.GetRange(0, path.Count - 1), path[^1]);
         }
 
-        public Crawler(string directory)
+        public Crawler(CDirectory directory)
         {
             _currentDirectory = directory;
         }
@@ -45,23 +45,29 @@ namespace DirectoryCrawler.Logic
             {
                 for (int i = 0; i < parameter.Length - 1; i++)
                 {
-                    _currentDirectory = Directory.GetParent(_currentDirectory).ToString();
+                    List<string> dir =
+                        CommonFunctions.PathToList(Directory.GetParent(_currentDirectory.ToString()).ToString());
+                    _currentDirectory = new CDirectory(dir.GetRange(0, dir.Count - 1), dir[^1]);
                 }
             }
             else if(parameter != ".")
             {
-                List<string> subDirectories = Directory.GetDirectories(_currentDirectory).ToList();
-                string x = subDirectories.Find(dir => dir == $"{_currentDirectory}\\{parameter}");
-                if (x != null) _currentDirectory = x;
+                List<string> subDirectories = Directory.GetDirectories(_currentDirectory.ToString()).ToList();
+                string newDir = subDirectories.Find(dir => dir == $"{_currentDirectory}\\{parameter}");
+                if (newDir != null)
+                {
+                    List<string> x = CommonFunctions.PathToList(newDir);
+                    _currentDirectory = new CDirectory(x.GetRange(0, x.Count - 1), x[^1]);
+                }
                 else throw new ChangeDirectoryException("Directory given did not exist", 1);
             }
-            return _currentDirectory;
+            return _currentDirectory.ToString();
         }
 
         public void DirectorieContent(out List<string> dirs, out List<string> files)
         {
-            dirs = Directory.GetDirectories(_currentDirectory).ToList();
-            files = Directory.GetFiles(_currentDirectory).ToList();
+            dirs = Directory.GetDirectories(_currentDirectory.ToString()).ToList();
+            files = Directory.GetFiles(_currentDirectory.ToString()).ToList();
         }
 
         private bool OnlyContainsDot(string str)
