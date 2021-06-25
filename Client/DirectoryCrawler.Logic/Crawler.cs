@@ -100,8 +100,7 @@ namespace DirectoryCrawler.Logic
             List<CFile> newFiles = new List<CFile>();
             foreach (string file in files)
             {
-                string fileNew = file.Replace("\\", "/");
-                List<string> path = fileNew.Split('/').ToList();
+                List<string> path = CommonFunctions.PathToList(file);
                 newFiles.Add(new CFile(path.GetRange(0, path.Count - 1), path[^1]));
             }
 
