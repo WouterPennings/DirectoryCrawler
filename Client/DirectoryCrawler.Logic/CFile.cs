@@ -10,19 +10,25 @@ namespace DirectoryCrawler.Logic
         private string _name;
         private CPath _cPath;
 
-        public CFile(string filePath)
+        public CFile(string location)
         {
-            filePath = filePath.Replace("\\", "/");
-            List<string> path = filePath.Split('/').ToList();
-            _cPath = new CPath(path.Take(path.Count - 2).ToList());
+            location = location.Replace("\\", "/");
+            List<string> path = location.Split('/').ToList();
+            _cPath = new CPath(path.GetRange(0, path.Count - 1).ToList());
             _name = path[^1];
         }
 
+        public CFile(List<string> path, string name)
+        {
+            _cPath = new CPath(path.GetRange(0, path.Count - 1).ToList());
+            _name = name;
+        }
+        
         public string GetName()
         {
             return _name;
         }
-        
+        /*
         public IEnumerable<Folder> GetPath()
         {
             return _Path;
@@ -37,5 +43,6 @@ namespace DirectoryCrawler.Logic
             }
             return path + _name; 
         }
+        */
     }
 }

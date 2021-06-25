@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace DirectoryCrawler.Logic
@@ -10,9 +11,9 @@ namespace DirectoryCrawler.Logic
         public CPath(List<string> directories)
         {
             _path = new List<CDirectory>();
-            foreach (string dir in directories)
+            for (int i = 0; i < directories.Count; i++)
             {
-                
+                _path.Add(new CDirectory(directories.GetRange(0, i).ToList(), directories[i]));
             }
         }
     }
