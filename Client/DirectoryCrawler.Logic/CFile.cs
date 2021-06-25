@@ -8,17 +8,13 @@ namespace DirectoryCrawler.Logic
     public class CFile
     {
         private string _name;
-        private List<Folder> _Path;
+        private CPath _cPath;
 
         public CFile(string filePath)
         {
-            _Path = new List<Folder>();
             filePath = filePath.Replace("\\", "/");
             List<string> path = filePath.Split('/').ToList();
-            for (int i = 0; i < path.Count - 1; i++)
-            {
-                _Path.Add(new Folder(path[i]));
-            }
+            _cPath = new CPath(path.Take(path.Count - 2).ToList());
             _name = path[^1];
         }
 
