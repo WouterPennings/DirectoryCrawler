@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 
@@ -20,7 +19,7 @@ namespace DirectoryCrawler.Logic
         {
             _currentDirectory = directory;
         }
-        
+
         public void CrawlDirectorie(string startDirectory, out List<CFile> files, out List<string> folders)
         {
             List<string> newFolders = new List<string>();
@@ -68,6 +67,11 @@ namespace DirectoryCrawler.Logic
         {
             dirs = Directory.GetDirectories(_currentDirectory.ToString()).ToList();
             files = Directory.GetFiles(_currentDirectory.ToString()).ToList();
+        }
+
+        public override string ToString()
+        {
+            return _currentDirectory.ToString();
         }
 
         private bool OnlyContainsDot(string str)

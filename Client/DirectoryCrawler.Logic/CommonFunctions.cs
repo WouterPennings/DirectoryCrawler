@@ -7,8 +7,13 @@ namespace DirectoryCrawler.Logic
     {
         public static List<string> PathToList(string path)
         {
-            string file = path.Replace("\\", "/");
-            return file.Split('/').ToList();
+            string str = path.Replace("\\", "/");
+            return str.Split('/').ToList();
         }
+
+        public static List<string> SeperateCommands(string input)
+        {
+            return input.Split(' ').ToList();
+        } 
     }
 }
