@@ -24,20 +24,22 @@ namespace DirectoryCrawler.Presentation
             //client = JsonConvert.DeserializeObject<Client>(File.ReadAllText(@"../../../Files/info.json"));
             //client?.MaybeSetId();
 
+            bool run = true;
             Crawler crawler = new Crawler();
             Console.WriteLine($"\n\n\n\n\n\nCurrent Directory: {crawler.ToString()} ->");
-            while (true)
+            while (run)
             {
                 string input = Console.ReadLine();
-                if (input == "exit") break;
                 List<string> list = CommonFunctions.SeperateCommands(input);
                 try
                 {
-                    string firstCommand = list[0];
-                    if (firstCommand.Length > 0)
+                    if (list[0].Length > 0)
                     {
-                        switch (firstCommand)
+                        switch (list[0])
                         {
+                            case "exit":
+                                run = false;
+                                break;
                             case "cd":
                                 Console.WriteLine("\n" + crawler.ChangeDirectory(list[1]));
                                 break;
@@ -52,7 +54,7 @@ namespace DirectoryCrawler.Presentation
                                 else Console.WriteLine("'dir' does not take any parameter.");
                                 break;
                             default:
-                                Console.WriteLine($"\n'{firstCommand}' is not a command.");
+                                Console.WriteLine($"\n'{list[0]}' is not a command.");
                                 break;
                         }
                     }
@@ -60,8 +62,8 @@ namespace DirectoryCrawler.Presentation
                 }
                 catch (ChangeDirectoryException exc)
                 {
-                    Console.WriteLine($"Exception: {exc.Message}");
-                    Console.WriteLine($"ExceptionCode: {exc.ExceptionCode}");
+                    Console.WriteLine($"\nException: {exc.Message}");
+                    Console.WriteLine($"ExceptionCode: {exc.ExceptionCode}\n");
                 }
             }
         }
