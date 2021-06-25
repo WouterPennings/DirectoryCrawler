@@ -16,5 +16,16 @@ namespace DirectoryCrawler.Logic
                 _path.Add(new CDirectory(directories.GetRange(0, i).ToList(), directories[i]));
             }
         }
+        
+        public override string ToString()
+        {
+            string path = "";
+            foreach (CDirectory dir in _path)
+            {
+                path += dir.GetName() + "\\";
+            }
+
+            return path;
+        }
     }
 }

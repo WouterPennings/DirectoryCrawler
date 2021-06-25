@@ -28,21 +28,15 @@ namespace DirectoryCrawler.Logic
         {
             return _name;
         }
-        /*
-        public IEnumerable<Folder> GetPath()
+        
+        public CPath GetPath()
         {
-            return _Path;
+            return _cPath;
         }
-
+        
         public override string ToString()
         {
-            string path = "";
-            foreach (Folder x in _Path)
-            {
-                path += x.GetName() + '/';
-            }
-            return path + _name; 
+            return _cPath.ToString() + _name;
         }
-        */
     }
 }

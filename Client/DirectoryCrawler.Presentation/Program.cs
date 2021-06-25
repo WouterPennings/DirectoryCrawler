@@ -29,7 +29,6 @@ namespace DirectoryCrawler.Presentation
             string fileNew = "C:\\Users\\woute\\Desktop\\BusinessLeonardo\\".Replace("\\", "/");
             List<string> path = fileNew.Split('/').ToList();
             CFile file2 = new CFile(path, "LeonARdo_Verslagpdf.pdf");
-            
             try
             {
                 Crawler crawler = new Crawler("C:\\Users\\woute\\Desktop\\restapi");

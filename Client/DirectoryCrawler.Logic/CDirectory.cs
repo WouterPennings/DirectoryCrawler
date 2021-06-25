@@ -12,5 +12,20 @@ namespace DirectoryCrawler.Logic
             _name = name;
             _path = new CPath(parentDirectories);
         }
+
+        public string GetName()
+        {
+            return _name;
+        }   
+        
+        public CPath Getpath()
+        {
+            return _path;
+        }
+
+        public override string ToString()
+        {
+            return _path + _name;
+        }
     }
 }
