@@ -9,10 +9,18 @@ namespace DirectoryCrawler.Logic
     {
         private CDirectory _currentDirectory;
 
-        public Crawler()
+        public Crawler(bool root = false)
         {
-            List<string> path = CommonFunctions.PathToList(Directory.GetCurrentDirectory());
-            _currentDirectory = new CDirectory(path.GetRange(0, path.Count - 1), path[^1]);
+            if (!root)
+            {
+                List<string> path = CommonFunctions.PathToList(Directory.GetCurrentDirectory());
+                _currentDirectory = new CDirectory(path.GetRange(0, path.Count - 1), path[^1]);
+            }
+            else
+            {
+                _currentDirectory = new CDirectory(new List<string>(), "C:");
+            }
+            
         }
 
         public Crawler(CDirectory directory)
@@ -39,34 +47,23 @@ namespace DirectoryCrawler.Logic
 
         public string ChangeDirectory(string parameter)
         {
-            if (parameter.Length == 0) throw new ChangeDirectoryException("No parameter was given", 0);
-            if (OnlyContainsDot(parameter) && parameter.Length > 1)
-            {
-                for (int i = 0; i < parameter.Length - 1; i++)
-                {
-                    List<string> dir =
-                        CommonFunctions.PathToList(Directory.GetParent(_currentDirectory.ToString()).ToString());
-                    _currentDirectory = new CDirectory(dir.GetRange(0, dir.Count - 1), dir[^1]);
-                }
-            }
-            else if(parameter != ".")
-            {
-                List<string> subDirectories = Directory.GetDirectories(_currentDirectory.ToString()).ToList();
-                string newDir = subDirectories.Find(dir => dir == $"{_currentDirectory}\\{parameter}");
-                if (newDir != null)
-                {
-                    List<string> x = CommonFunctions.PathToList(newDir);
-                    _currentDirectory = new CDirectory(x.GetRange(0, x.Count - 1), x[^1]);
-                }
-                else throw new ChangeDirectoryException("Directory given did not exist", 1);
-            }
+            if (parameter.Length == 0) 
+                throw new ChangeDirectoryException("No parameter was given", 0);
+            if (_currentDirectory.Getpath().GetPath().Count == 0) 
+                return _currentDirectory.ToString();
+            if (OnlyContainsDot(parameter) && parameter.Length > 1) 
+                _currentDirectory = GetParentDirectory(parameter);
+            else if(parameter != ".") 
+                _currentDirectory = GetSubDirectory(parameter);
             return _currentDirectory.ToString();
         }
 
-        public void DirectorieContent(out List<string> dirs, out List<string> files)
+        public void DirectorieContent(out List<CDirectory> newDirs, out List<CFile> newFils)
         {
-            dirs = Directory.GetDirectories(_currentDirectory.ToString()).ToList();
-            files = Directory.GetFiles(_currentDirectory.ToString()).ToList();
+            List<string> dirs = Directory.GetDirectories(_currentDirectory.ToString()).ToList();
+            newDirs = GetDirectoriesInDirectory(dirs);
+            List<string> files = Directory.GetFiles(_currentDirectory.ToString()).ToList();
+            newFils = GetFilesInDirectory(files);
         }
 
         public override string ToString()
@@ -78,6 +75,53 @@ namespace DirectoryCrawler.Logic
         {
             foreach(char c in str) if (c != '.') return false;
             return true;
+        }
+
+        private CDirectory GetSubDirectory(string directoryName)
+        {
+            List<string> subDirectories = Directory.GetDirectories(_currentDirectory.ToString()).ToList();
+            string newDir = subDirectories.Find(dir => dir == $"{_currentDirectory}\\{directoryName}");
+            if (newDir != null)
+            {
+                List<string> x = CommonFunctions.PathToList(newDir);
+                return new CDirectory(x.GetRange(0, x.Count - 1), x[^1]);
+            }
+            throw new ChangeDirectoryException("Directory given did not exist", 1);
+        }
+
+        private CDirectory GetParentDirectory(string parameter)
+        {
+            CDirectory newDir = _currentDirectory;
+            for (int i = 0; i < parameter.Length - 1; i++)
+            {
+                List<string> dir = CommonFunctions.PathToList(Directory.GetParent(newDir.ToString()).ToString());
+                newDir = new CDirectory(dir.GetRange(0, dir.Count - 1), dir[^1]);
+            }
+            return newDir;
+        }
+        
+        private List<CDirectory> GetDirectoriesInDirectory(List<string> dirs)
+        {
+            List<CDirectory> newDirs = new List<CDirectory>();
+            foreach (string dir in dirs)
+            {
+                List<string> x = CommonFunctions.PathToList(dir);
+                newDirs.Add(new CDirectory(x.GetRange(0, x.Count - 1), x[^1]));
+            }
+
+            return newDirs;
+        }
+        
+        private List<CFile> GetFilesInDirectory(List<string> files)
+        {
+            List<CFile> newFiles = new List<CFile>();
+            foreach (string file in files)
+            {
+                List<string> x = CommonFunctions.PathToList(file);
+                newFiles.Add(new CFile(x.GetRange(0, x.Count - 1), x[^1]));
+            }
+
+            return newFiles;
         }
         
         private List<string> GetSubDirectoriesContent(string dir, out List<CFile> files)

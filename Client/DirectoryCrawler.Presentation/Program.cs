@@ -26,7 +26,7 @@ namespace DirectoryCrawler.Presentation
 
             bool run = true;
             Crawler crawler = new Crawler();
-            Console.WriteLine($"\n\n\n\n\n\nCurrent Directory: {crawler.ToString()} ->");
+            Console.Write($"\n\n\n\n\n\n{crawler.ToString()}> ");
             while (run)
             {
                 string input = Console.ReadLine();
@@ -41,15 +41,17 @@ namespace DirectoryCrawler.Presentation
                                 run = false;
                                 break;
                             case "cd":
-                                Console.WriteLine("\n" + crawler.ChangeDirectory(list[1]));
+                                if (list.Count > 2) Console.WriteLine("Command 'cd' only takes one parameter.");
+                                else if (list.Count > 1) Console.WriteLine("\n" + crawler.ChangeDirectory(list[1]));
+                                else Console.WriteLine("No parameter was given.");
                                 break;
                             case "dir":
                                 if (list.Count == 1)
                                 {
-                                    crawler.DirectorieContent(out List<string> dirs, out List<string> files);
+                                    crawler.DirectorieContent(out List<CDirectory> dirs, out List<CFile> files);
                                     Console.WriteLine($"\ndirectory of {crawler.ToString()}");
-                                    foreach (string dir in dirs)   Console.WriteLine($"<dir>     {CommonFunctions.PathToList(dir)[^1]}");
-                                    foreach (string file in files) Console.WriteLine($"<file>    {CommonFunctions.PathToList(file)[^1]}");
+                                    foreach (CDirectory dir in dirs)   Console.WriteLine($"<dir>     {dir.GetName()}");
+                                    foreach (CFile file in files)      Console.WriteLine($"<file>    {file.GetName()}");
                                 }
                                 else Console.WriteLine("'dir' does not take any parameter.");
                                 break;
@@ -58,13 +60,13 @@ namespace DirectoryCrawler.Presentation
                                 break;
                         }
                     }
-                    Console.WriteLine($"\nCurrent Directory: {crawler.ToString()} ->");
                 }
                 catch (ChangeDirectoryException exc)
                 {
                     Console.WriteLine($"\nException: {exc.Message}");
                     Console.WriteLine($"ExceptionCode: {exc.ExceptionCode}\n");
                 }
+                Console.Write($"{crawler.ToString()}> ");
             }
         }
 
