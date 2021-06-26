@@ -13,6 +13,16 @@ namespace DirectoryCrawler.Logic
             _path = new CPath(parentDirectories);
         }
 
+        public void SetPath(CPath path)
+        {
+            _path = path;
+        }
+
+        public void SetName(string name)
+        {
+            _name = name;
+        }
+        
         public string GetName()
         {
             return _name;

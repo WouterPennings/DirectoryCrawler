@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace DirectoryCrawler.Logic
@@ -14,6 +15,6 @@ namespace DirectoryCrawler.Logic
         public static List<string> SeperateCommands(string input)
         {
             return input.Split(' ').ToList();
-        } 
+        }
     }
 }

@@ -16,6 +16,11 @@ namespace DirectoryCrawler.Logic
             }
         }
 
+        public void RemoveLastDirectory()
+        {
+            _path.RemoveAt(_path.Count - 1);
+        }
+        
         public List<CDirectory> GetPath()
         {
             return _path;

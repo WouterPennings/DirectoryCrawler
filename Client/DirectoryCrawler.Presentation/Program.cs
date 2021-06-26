@@ -20,12 +20,8 @@ namespace DirectoryCrawler.Presentation
         
         static void Main()
         {
-            //Console.WriteLine("Bonjour, Custom FTP protocol");
-            //client = JsonConvert.DeserializeObject<Client>(File.ReadAllText(@"../../../Files/info.json"));
-            //client?.MaybeSetId();
-
             bool run = true;
-            Crawler crawler = new Crawler();
+            Crawler crawler = new Crawler(true);
             Console.Write($"\n\n\n\n\n\n{crawler.ToString()}> ");
             while (run)
             {
